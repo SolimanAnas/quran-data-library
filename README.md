@@ -44,9 +44,7 @@ mushaf pages/madina-green/
 
 Standard Madina Mushaf pages rendered at 1024px width in PNG format. Optimized for digital screens with clear readability.
 
-| Preview |
-|---------|
-| ![Page 1](mushaf pages/mushaf-1024/001.png) |
+![Page 1](mushaf%20pages/mushaf-1024/001.png)
 
 ```
 mushaf pages/mushaf-1024/
@@ -109,9 +107,7 @@ Quran line by line png/
 
 ### Preview
 
-| Line 1 | Line 2 |
-|--------|--------|
-| ![Line 1](Quran line by line png/1/1.png) | ![Line 2](Quran line by line png/1/2.png) |
+![Line 1](Quran%20line%20by%20line%20png/1/1.png) ![Line 2](Quran%20line%20by%20line%20png/1/2.png)
 
 ---
 
