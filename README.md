@@ -1,35 +1,32 @@
 # القرآن الكريم — Quran Data Library
 
-A comprehensive collection of Quran data: **mushaf page images** in multiple styles and **line-by-line verse images**. Built for developers, researchers, and Islamic app creators.
+A comprehensive collection of Quran data: **mushaf page images** in multiple styles, **font-based renderings**, and **line-by-line verse images**. Built for developers, researchers, and Islamic app creators.
 
-![Madina 1421](mushaf%20pages/madina-1421/001.webp)
-![Madina Green](mushaf%20pages/madina-green/001.webp)
-![Mushaf Madina 1441](mushaf%20pages/mushaf-madina-1441/001.webp)
-![Tajweed](mushaf%20pages/tajweed/001.webp)
-
-> **Last updated:** May 25, 2026
+> **Last updated:** May 23, 2026
 
 ---
 
-## 📦 Versions
+## Versions
 
 | Version | Format | Count | Description |
 |---------|--------|-------|-------------|
 | **Madina 1421** | `.webp` | 604+ | Classic Madina Mushaf (1421 AH) |
 | **Madina Green** | `.webp` | 621 | Green-tinted Madina Mushaf |
-| **Mushaf Madina 1441** | `.webp` | 604 | Modern Madina Mushaf (1441 AH) |
-| **Tajweed** | `.webp` | 604 | Color-coded Tajweed rules |
-| **Line-by-line** | `.png` | 604×15 | Individual verse lines per page |
+| **Mushaf 1024** | `.png` | 604 | 1024px-wide Mushaf pages |
+| **Mushaf Madina 1420** | `.webp` | 604 | Modern Madina Mushaf (1420 AH) |
+| **Tajweed Colored** | `.webp` | 604 | Color-coded Tajweed rules |
+| **QBC v2** | `.woff2` | 604 | Quran Bihari Calligraphy v2 fonts |
+| **Line-by-line** | `.png` | 604x15 | Individual verse lines per page |
 
 ---
 
-## 🖼️ Preview
+## Preview
 
 ### Mushaf Pages (Full Page)
 
-| Madina 1421 | Madina Green | Madina 1441 | Tajweed |
-|-------------|--------------|-------------|---------|
-| ![1421](mushaf%20pages/madina-1421/001.webp) | ![Green](mushaf%20pages/madina-green/001.webp) | ![1441](mushaf%20pages/mushaf-madina-1441/001.webp) | ![Tajweed](mushaf%20pages/tajweed/001.webp) |
+| Mushaf 1024 |
+|-------------|
+| ![Page 1](mushaf%20pages/mushaf-1024/001.png) |
 
 ### Line-by-Line (Individual Verse Lines)
 
@@ -50,7 +47,7 @@ Quran line by line png/
 
 ---
 
-## 🚀 Usage
+## Usage
 
 Clone the repo and use the images directly:
 
@@ -61,9 +58,9 @@ git clone https://github.com/SolimanAnas/quran-data-library.git
 ### Loading in apps
 
 ```js
-// Load page 1 from Madina 1421
+// Load page 1 from Mushaf 1024
 const img = new Image()
-img.src = 'mushaf pages/madina-1421/001.webp'
+img.src = 'mushaf pages/mushaf-1024/001.png'
 
 // Load line 5 of page 10
 const line = new Image()
@@ -103,29 +100,32 @@ console.log(line.surah_en, line.ayah_start, line.ayah_end)
 
 ---
 
-## 📁 Structure
+## Structure
 
 ```
 quran-data-library/
 ├── mushaf pages/
-│   ├── madina-1421/          # Classic Madina Mushaf
-│   │   └── coordinates/      #   └── Page → surah/ayah mapping
-│   ├── madina-green/         # Green-tinted version
-│   │   └── coordinates/      #   └── Page → surah/ayah mapping
-│   ├── mushaf-madina-1441/   # Modern Madina Mushaf
-│   │   └── coordinates/      #   └── Page → surah/ayah mapping
-│   └── tajweed/              # Tajweed color-coded
-│       └── coordinates/      #   └── Page → surah/ayah mapping
-├── Quran line by line png/   # Per-page line images
+│   ├── madina-1421/              # Classic Madina Mushaf
+│   │   └── coordinates/          #   └── Page → surah/ayah mapping
+│   ├── madina-green/             # Green-tinted version
+│   │   └── coordinates/          #   └── Page → surah/ayah mapping
+│   ├── mushaf-1024/              # 1024px-wide PNG pages
+│   ├── mushaf-madina-1420/       # Modern Madina Mushaf (1420 AH)
+│   │   └── coordinates/          #   └── Page → surah/ayah mapping
+│   └── tajweed-colored/          # Tajweed color-coded
+│       └── coordinates/          #   └── Page → surah/ayah mapping
+├── mushaf fonts/
+│   └── qbc-v2/                   # Quran Bihari Calligraphy v2 fonts
+├── Quran line by line png/       # Per-page line images
 │   ├── 1/...15.png
 │   ├── 2/...15.png
 │   ├── ...
-│   └── coordinates/          #   └── Page+Line → surah/ayah mapping
+│   └── coordinates/              #   └── Page+Line → surah/ayah mapping
 └── README.md
 ```
 
 ---
 
-## 📄 License
+## License
 
 Data is provided for personal and educational use. Respect the terms of the original Quran text sources.
