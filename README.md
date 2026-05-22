@@ -170,53 +170,142 @@ line-by-line/
 
 ---
 
-## Usage
+## API Reference
 
-### Clone the repository
+All data is accessible via direct URL patterns from GitHub's raw CDN. No authentication or API key required.
 
-```bash
-git clone https://github.com/SolimanAnas/quran-data-library.git
+### Base URL
+
+```
+https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/
 ```
 
-### Load a mushaf page image
+### Endpoints
+
+| Endpoint | Example | Returns |
+|----------|---------|---------|
+| `GET /page/{version}/{page}` | `/page/tajweed-colored/005` | WebP or PNG image |
+| `GET /line/{page}/{line}` | `/line/1/6` | PNG image |
+| `GET /coordinates/{version}` | `/coordinates/madina-1421` | JSON (page → surah/ayah) |
+| `GET /coordinates/lines` | `/coordinates/lines` | JSON (page+line → surah/ayah) |
+| `GET /font/{page}` | `/font/1` | WOFF2 font |
+
+#### Page image
+
+```
+GET /page/{version}/{page}
+```
 
 ```js
-// Page 5 from Tajweed Colored
+const url = `https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/mushaf-pages/tajweed-colored/005.webp`
 const img = new Image()
-img.src = 'mushaf-pages/tajweed-colored/005.webp'
+img.src = url
 ```
 
-### Load a line image
+| Param | Values |
+|-------|--------|
+| `version` | `madina-1421`, `madina-green`, `mushaf-1024`, `mushaf-madina-1420`, `tajweed-colored`, `Madina-2-Brown-Border` |
+| `page` | 3-digit zero-padded (`001` – `604`) |
 
-```js
-// Line 3 of page 10
-const line = new Image()
-line.src = 'line-by-line/10/3.png'
+#### Line image
+
+```
+GET /line/{page}/{line}
 ```
 
-### Use coordinates — page-level
+```js
+const url = `https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/line-by-line/1/6.png`
+```
 
-Each mushaf version includes a `coordinates.json` that maps every page to its surah and ayah range:
+| Param | Values |
+|-------|--------|
+| `page` | `1` – `604` |
+| `line` | `1` – `15` (varies per page) |
+
+#### Coordinates — page-level
+
+```
+GET /coordinates/{version}
+```
 
 ```js
-const res = await fetch('mushaf-pages/madina-1421/coordinates/coordinates.json')
+const res = await fetch('https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/mushaf-pages/madina-1421/coordinates/coordinates.json')
 const { pages } = await res.json()
-
 const page = pages['001']
 console.log(page.surah_en, page.ayah_start, page.ayah_end)
 // → "Al-Fatiha"  1  7
 ```
 
-### Use coordinates — line-level
+#### Coordinates — line-level
+
+```
+GET /coordinates/lines
+```
 
 ```js
-const res = await fetch('line-by-line/coordinates/coordinates.json')
+const res = await fetch('https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/line-by-line/coordinates/coordinates.json')
 const { pages } = await res.json()
-
-// Line 3 of page 1
 const line = pages['001'].lines['3']
 console.log(line.surah_en, line.ayah_start, line.ayah_end)
 // → "Al-Fatiha"  2  2
+```
+
+#### Font file
+
+```
+GET /font/{page}
+```
+
+```css
+@font-face {
+  font-family: 'QBC-Page-1';
+  src: url('https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/mushaf-fonts/qbc-v2/p1.woff2') format('woff2');
+}
+```
+
+### JS Helper Library
+
+A helper module is included in the repo for easy URL construction:
+
+```js
+import {
+  pageUrl,
+  lineUrl,
+  coordsUrl,
+  fontUrl,
+  fetchCoords,
+  VERSIONS,
+} from './quran-api.js'
+
+pageUrl('tajweed-colored', 5)       // → full URL to page 5
+lineUrl(1, 6)                        // → full URL to line 6 of page 1
+coordsUrl('madina-1421')             // → full URL to coordinates JSON
+fontUrl(1)                           // → full URL to p1.woff2
+await fetchCoords('madina-1421')     // → parsed JSON directly
+```
+
+---
+
+## Usage
+
+Clone the repo or use the API patterns above without cloning:
+
+```bash
+git clone https://github.com/SolimanAnas/quran-data-library.git
+```
+
+### Local usage with relative paths
+
+```js
+// Page 5 from Tajweed Colored (local file)
+const img = new Image()
+img.src = 'mushaf-pages/tajweed-colored/005.webp'
+```
+
+```js
+// Line 3 of page 10 (local file)
+const line = new Image()
+line.src = 'line-by-line/10/3.png'
 ```
 
 ---
