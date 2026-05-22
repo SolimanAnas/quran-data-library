@@ -8,13 +8,11 @@ A comprehensive, developer-ready collection of Quran data in multiple formats: m
 
 | # | Dataset | Format | Count | Description |
 |---|---------|--------|-------|-------------|
-| 1 | [Madina 1421](#1-madina-1421) | `.webp` | 604 pages | Classic Madina Mushaf — Lafz Al-Jalalah in red |
-| 2 | [Madina Green](#2-madina-green) | `.webp` | 621 pages | Madina layout with green-tinted background |
-| 3 | [Mushaf 1024](#3-mushaf-1024) | `.png` | 604 pages | 1024px-wide PNG — optimized for screens |
-| 4 | [Mushaf Madina 1420](#4-mushaf-madina-1420) | `.webp` | 604 pages | Modern 1420 AH Madina edition |
-| 5 | [Tajweed Colored](#5-tajweed-colored) | `.webp` | 604 pages | Color-coded by Tajweed rules |
-| 6 | [QBC v2 Fonts](#6-qbc-v2-fonts) | `.woff2` | 604 fonts | Per-page web fonts for scalable rendering |
-| 7 | [Line-by-Line](#7-line-by-line) | `.png` | 604 × 15 | Individual verse-line images per page |
+| 1 | [Madina 1421 + Mushaf 1024](#1-madina-1421--mushaf-1024) | `.webp` + `.png` | 604 × 2 | Red Lafz Al-Jalalah & 1024px PNG |
+| 2 | [Madina Green + Brown Border](#2-madina-green--madina-brown-border) | `.webp` + `.png` | 621 + 604 | Green-tinted & brown-bordered variants |
+| 3 | [Mushaf Madina 1420 + Tajweed Colored](#3-mushaf-madina-1420--tajweed-colored) | `.webp` | 604 × 2 | Modern 1420 AH & Tajweed color-coded |
+| 4 | [QBC v2 Fonts](#4-qbc-v2-fonts) | `.woff2` | 604 fonts | Per-page web fonts for scalable rendering |
+| 5 | [Line-by-Line](#5-line-by-line) | `.png` | 604 × 15 | Individual verse-line images per page |
 
 ---
 
@@ -23,19 +21,20 @@ A comprehensive, developer-ready collection of Quran data in multiple formats: m
 ```
 quran-data-library/
 ├── mushaf-pages/
-│   ├── madina-1421/          # 001.webp – 604.webp  +  coordinates/
-│   ├── madina-green/         # 001.webp – 621.webp  +  coordinates/
-│   ├── mushaf-1024/          # 001.png  – 604.png   +  coordinates/
-│   ├── mushaf-madina-1420/   # 001.webp – 604.webp  +  coordinates/
-│   └── tajweed-colored/      # 001.webp – 604.webp  +  coordinates/
+│   ├── madina-1421/              # 001.webp – 604.webp  +  coordinates/
+│   ├── madina-green/             # 001.webp – 621.webp  +  coordinates/
+│   ├── mushaf-1024/              # 001.png  – 604.png   +  coordinates/
+│   ├── mushaf-madina-1420/       # 001.webp – 604.webp  +  coordinates/
+│   ├── tajweed-colored/          # 001.webp – 604.webp  +  coordinates/
+│   └── Madina-2-Brown-Border/    # 001.png  – 604.png   +  coordinates/
 ├── mushaf-fonts/
-│   └── qbc-v2/               # p1.woff2 – p604.woff2
+│   └── qbc-v2/                   # p1.woff2 – p604.woff2
 ├── line-by-line/
-│   ├── 1/                    # 1.png – 15.png  (page 1 lines)
+│   ├── 1/                        # 1.png – 15.png  (page 1 lines)
 │   ├── 2/
 │   ├── …
 │   ├── 604/
-│   └── coordinates/          # page+line → surah/ayah mapping
+│   └── coordinates/              # page+line → surah/ayah mapping
 └── README.md
 ```
 
@@ -43,13 +42,13 @@ quran-data-library/
 
 ## Datasets
 
-### 1. Madina 1421
+### 1. Madina 1421 + Mushaf 1024
 
-**Mushaf with Lafz Al-Jalalah in Red** (مصحف لفظ الجلالة باللون الأحمر)
+| Madina 1421 | Mushaf 1024 |
+|:-:|:-:|
+| ![Madina 1421 Page 1](mushaf-pages/madina-1421/001.webp) | ![Mushaf 1024 Page 1](mushaf-pages/mushaf-1024/001.png) |
 
-The classic King Fahd Complex Madina Mushaf — the word "Allah" (الله) is highlighted in red throughout. Includes a `coordinates.json` mapping each page to its surah and ayah range.
-
-![Page 1](mushaf-pages/madina-1421/001.webp)
+**Madina 1421** — Mushaf with Lafz Al-Jalalah in Red (مصحف لفظ الجلالة باللون الأحمر). The classic King Fahd Complex Madina Mushaf where the word "Allah" (الله) is highlighted in red. Includes a `coordinates.json` mapping each page to its surah and ayah range.
 
 ```
 mushaf-pages/madina-1421/
@@ -58,13 +57,25 @@ mushaf-pages/madina-1421/
     └── coordinates.json
 ```
 
+**Mushaf 1024** — Standard Madina Mushaf pages rendered at 1024 px width in PNG format. High clarity for digital screens.
+
+```
+mushaf-pages/mushaf-1024/
+├── 001.png … 604.png
+├── thumbnail.png
+└── coordinates/
+    └── coordinates.json
+```
+
 ---
 
-### 2. Madina Green
+### 2. Madina Green + Madina Brown Border
 
-Same Madina Mushaf layout rendered with a **green-tinted background**. Ideal for apps that need a softer or color-themed page aesthetic.
+| Madina Green | Madina Brown Border |
+|:-:|:-:|
+| ![Madina Green Page 1](mushaf-pages/madina-green/001.webp) | ![Brown Border Page 1](mushaf-pages/Madina-2-Brown-Border/001.png) |
 
-![Page 1](mushaf-pages/madina-green/001.webp)
+**Madina Green** — Same Madina Mushaf layout rendered with a green-tinted background. Ideal for apps that need a softer or color-themed page aesthetic.
 
 ```
 mushaf-pages/madina-green/
@@ -73,16 +84,10 @@ mushaf-pages/madina-green/
     └── coordinates.json
 ```
 
----
-
-### 3. Mushaf 1024
-
-Standard Madina Mushaf pages rendered at **1024 px width in PNG format**. High clarity for digital screens.
-
-![Page 1](mushaf-pages/mushaf-1024/001.png)
+**Madina Brown Border** — Madina Mushaf layout with a distinctive brown border frame. Rendered in PNG format for clean, consistent display.
 
 ```
-mushaf-pages/mushaf-1024/
+mushaf-pages/Madina-2-Brown-Border/
 ├── 001.png … 604.png
 └── coordinates/
     └── coordinates.json
@@ -90,11 +95,13 @@ mushaf-pages/mushaf-1024/
 
 ---
 
-### 4. Mushaf Madina 1420
+### 3. Mushaf Madina 1420 + Tajweed Colored
 
-Modern Madina Mushaf based on the **1420 AH printing**, featuring contemporary calligraphic styling.
+| Mushaf Madina 1420 | Tajweed Colored |
+|:-:|:-:|
+| ![Mushaf Madina 1420 Page 1](mushaf-pages/mushaf-madina-1420/001.webp) | ![Tajweed Colored Page 1](mushaf-pages/tajweed-colored/001.webp) |
 
-![Page 1](mushaf-pages/mushaf-madina-1420/001.webp)
+**Mushaf Madina 1420** — Modern Madina Mushaf based on the 1420 AH printing, featuring contemporary calligraphic styling.
 
 ```
 mushaf-pages/mushaf-madina-1420/
@@ -103,13 +110,7 @@ mushaf-pages/mushaf-madina-1420/
     └── coordinates.json
 ```
 
----
-
-### 5. Tajweed Colored
-
-Color-coded Quran pages following **Tajweed recitation rules** — each letter is colored according to its pronunciation rule (e.g., red for qalqalah, green for ghunnah). Perfect for learning proper Tajweed.
-
-![Page 1](mushaf-pages/tajweed-colored/001.webp)
+**Tajweed Colored** — Color-coded Quran pages following Tajweed recitation rules. Each letter is colored according to its pronunciation rule (e.g., red for qalqalah, green for ghunnah). Perfect for learning proper Tajweed.
 
 ```
 mushaf-pages/tajweed-colored/
@@ -120,7 +121,7 @@ mushaf-pages/tajweed-colored/
 
 ---
 
-### 6. QBC v2 Fonts
+### 4. QBC v2 Fonts
 
 **Quran Bihari Calligraphy v2** — font-based Quran rendering using per-page WOFF2 font files. Each font file renders one full page as a web font, enabling pixel-perfect, fully scalable text without rasterization.
 
@@ -144,9 +145,9 @@ mushaf-fonts/qbc-v2/
 
 ---
 
-### 7. Line-by-Line
+### 5. Line-by-Line
 
-Each of the 604 pages is split into **individual verse lines** (up to 15 per page) as separate PNG images. Ideal for verse-by-verse readers, flashcard apps, or Quran memorization tools.
+Each of the 604 pages is split into individual verse lines (up to 15 per page) as separate PNG images. Ideal for verse-by-verse readers, flashcard apps, or Quran memorization tools.
 
 ```
 line-by-line/
