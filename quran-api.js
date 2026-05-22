@@ -12,6 +12,15 @@ const VERSIONS = {
 const FONT_VERSION = 'qbc-v2'
 const FONT_DIR = 'mushaf-fonts/qbc-v2'
 const LINE_DIR = 'line-by-line'
+const TAFSIR_DIR = 'tafsir'
+
+const TAFSIRS = {
+  'saadi':      { db: 'tafsir-saadi.db',                      json: 'saadi.json' },
+  'baghawi':    { db: 'tafsir-baghawi.db',                     json: 'baghawi.json' },
+  'ibn-kathir': { db: 'tafsir-ibn-kathir.db',                  json: 'ibn-kathir.json' },
+  'qortobi':    { db: 'tafsir-qortobi.db',                     json: 'al-qurtubi.json' },
+  'al-qurtubi': { db: 'tafsir-qortobi.db',                     json: 'al-qurtubi.json' },
+}
 
 function pad(n, z = 3) {
   return String(n).padStart(z, '0')
@@ -41,6 +50,24 @@ function fontUrl(page) {
   return `${BASE}/${FONT_DIR}/p${page}.woff2`
 }
 
+function tafsirUrl(name) {
+  const t = TAFSIRS[name]
+  if (!t) throw new Error(`Unknown tafsir: ${name}. Valid: ${Object.keys(TAFSIRS).join(', ')}`)
+  return `${BASE}/${TAFSIR_DIR}/${t.db}`
+}
+
+function tafsirJsonUrl(name) {
+  const t = TAFSIRS[name]
+  if (!t) throw new Error(`Unknown tafsir: ${name}. Valid: ${Object.keys(TAFSIRS).join(', ')}`)
+  return `${BASE}/${TAFSIR_DIR}/json/${t.json}`
+}
+
+async function fetchTafsir(name) {
+  const res = await fetch(tafsirJsonUrl(name))
+  if (!res.ok) throw new Error(`Failed to fetch tafsir ${name}: ${res.status}`)
+  return res.json()
+}
+
 async function fetchCoords(version) {
   const res = await fetch(coordsUrl(version))
   if (!res.ok) throw new Error(`Failed to fetch coordinates for ${version}: ${res.status}`)
@@ -57,11 +84,15 @@ export {
   BASE,
   VERSIONS,
   FONT_VERSION,
+  TAFSIRS,
   pageUrl,
   lineUrl,
   coordsUrl,
   lineCoordsUrl,
   fontUrl,
+  tafsirUrl,
+  tafsirJsonUrl,
   fetchCoords,
   fetchLineCoords,
+  fetchTafsir,
 }

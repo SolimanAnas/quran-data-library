@@ -15,6 +15,7 @@ A comprehensive, developer-ready collection of Quran data in multiple formats: m
 | 3 | [Mushaf Madina 1420 + Tajweed Colored](#3-mushaf-madina-1420--tajweed-colored) | `.webp` | 604 × 2 | Modern 1420 AH & Tajweed color-coded |
 | 4 | [QBC v2 Fonts](#4-qbc-v2-fonts) | `.woff2` | 604 fonts | Per-page web fonts for scalable rendering |
 | 5 | [Line-by-Line](#5-line-by-line) | `.png` | 604 × 15 | Individual verse-line images per page |
+| 6 | [Tafsir](#6-tafsir) | `.db` + `.json` | 4 tafsirs | Classical Arabic tafsir by Saadi, Baghawi, Ibn Kathir & Al-Qurtubi |
 
 ---
 
@@ -37,6 +38,16 @@ quran-data-library/
 │   ├── …
 │   ├── 604/
 │   └── coordinates/              # page+line → surah/ayah mapping
+├── tafsir/
+│   ├── tafsir-saadi.db           # 7.9 MB – SQLite
+│   ├── tafsir-baghawi.db         # 9.4 MB
+│   ├── tafsir-ibn-kathir.db      # 17.9 MB
+│   ├── tafsir-qortobi.db         # 22.0 MB
+│   └── json/                     # JSON exports for web use
+│       ├── saadi.json
+│       ├── baghawi.json
+│       ├── ibn-kathir.json
+│       └── al-qurtubi.json
 └── README.md
 ```
 
@@ -170,6 +181,71 @@ line-by-line/
 
 ---
 
+### 6. Tafsir
+
+Four classical Arabic tafsir (Quran exegesis) works — each covering all 6,236 ayahs with detailed commentary. Available as SQLite databases for efficient querying and as JSON exports for web use.
+
+| Tafsir | Scholar | DB | JSON | Ayahs |
+|--------|---------|----|------|-------|
+| **Al-Saadi** | Abdur Rahman Al-Saadi | `tafsir-saadi.db` | `saadi.json` | 6,236 |
+| **Al-Baghawi** | Al-Husayn Al-Baghawi | `tafsir-baghawi.db` | `baghawi.json` | 6,236 |
+| **Ibn Kathir** | Ismail Ibn Kathir | `tafsir-ibn-kathir.db` | `ibn-kathir.json` | 6,236 |
+| **Al-Qurtubi** | Muhammad Al-Qurtubi | `tafsir-qortobi.db` | `al-qurtubi.json` | 6,234 |
+
+```
+tafsir/
+├── tafsir-saadi.db
+├── tafsir-baghawi.db
+├── tafsir-ibn-kathir.db
+├── tafsir-qortobi.db
+└── json/
+    ├── saadi.json
+    ├── baghawi.json
+    ├── ibn-kathir.json
+    └── al-qurtubi.json
+```
+
+**SQLite schema:**
+```sql
+CREATE TABLE {scholar_code} (
+    SURA_num  INTEGER,  -- surah number (1–114)
+    AYA_num   INTEGER,  -- ayah number within surah
+    Tafsir    TEXT      -- commentary text (Arabic, with HTML formatting)
+);
+```
+
+| DB | Table code |
+|----|-----------|
+| `tafsir-saadi.db` | `AS` |
+| `tafsir-baghawi.db` | `Ba` |
+| `tafsir-ibn-kathir.db` | `IK` |
+| `tafsir-qortobi.db` | `AQ` |
+
+**Usage with Node.js (better-sqlite3):**
+```js
+import Database from 'better-sqlite3'
+const db = new Database('tafsir/tafsir-saadi.db')
+
+// Get tafsir for Al-Fatiha, ayah 1
+const row = db.prepare('SELECT Tafsir FROM AS WHERE SURA_num = 1 AND AYA_num = 1').get()
+console.log(row.Tafsir)
+```
+
+**Usage in browser (sql.js):**
+```js
+import initSqlJs from 'sql.js'
+
+const response = await fetch('https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/tafsir/tafsir-saadi.db')
+const buffer = await response.arrayBuffer()
+const SQL = await initSqlJs()
+const db = new SQL.Database(new Uint8Array(buffer))
+
+const result = db.exec('SELECT Tafsir FROM AS WHERE SURA_num = 1 AND AYA_num = 1')
+console.log(result[0].values[0][0])
+```
+
+---
+
 ## API Reference
 
 All data is accessible via direct URL patterns from GitHub's raw CDN. No authentication or API key required.
@@ -189,6 +265,8 @@ https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/
 | `GET /coordinates/{version}` | `/coordinates/madina-1421` | JSON (page → surah/ayah) |
 | `GET /coordinates/lines` | `/coordinates/lines` | JSON (page+line → surah/ayah) |
 | `GET /font/{page}` | `/font/1` | WOFF2 font |
+| `GET /tafsir/{name}` | `/tafsir/saadi` | SQLite database |
+| `GET /tafsir/{name}/json` | `/tafsir/saadi/json` | JSON (all ayahs) |
 
 #### Page image
 
@@ -263,6 +341,39 @@ GET /font/{page}
 }
 ```
 
+#### Tafsir database (SQLite)
+
+```
+GET /tafsir/{name}
+```
+
+```js
+const url = `https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/tafsir/tafsir-saadi.db`
+```
+
+| Param | Values |
+|-------|--------|
+| `name` | `saadi`, `baghawi`, `ibn-kathir`, `qortobi` |
+
+#### Tafsir (JSON)
+
+```
+GET /tafsir/{name}/json
+```
+
+```js
+const res = await fetch('https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/tafsir/json/saadi.json')
+const { data } = await res.json()
+
+// Find tafsir for Al-Fatiha (surah 1), ayah 1
+const ayah = data.find(a => a.surah === 1 && a.ayah === 1)
+console.log(ayah.text)
+```
+
+| Param | Values |
+|-------|--------|
+| `name` | `saadi`, `baghawi`, `ibn-kathir`, `al-qurtubi` |
+
 ### JS Helper Library
 
 A helper module is included in the repo for easy URL construction:
@@ -273,15 +384,22 @@ import {
   lineUrl,
   coordsUrl,
   fontUrl,
+  tafsirUrl,
+  tafsirJsonUrl,
   fetchCoords,
+  fetchTafsir,
   VERSIONS,
+  TAFSIRS,
 } from './quran-api.js'
 
 pageUrl('tajweed-colored', 5)       // → full URL to page 5
 lineUrl(1, 6)                        // → full URL to line 6 of page 1
 coordsUrl('madina-1421')             // → full URL to coordinates JSON
 fontUrl(1)                           // → full URL to p1.woff2
+tafsirUrl('saadi')                   // → full URL to SQLite DB
+tafsirJsonUrl('ibn-kathir')          // → full URL to JSON export
 await fetchCoords('madina-1421')     // → parsed JSON directly
+await fetchTafsir('saadi')           // → parsed tafsir JSON
 ```
 
 ---
