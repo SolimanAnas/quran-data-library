@@ -280,6 +280,14 @@ const img = new Image()
 img.src = url
 ```
 
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/mushaf-pages/tajweed-colored/005.webp'
+resp = requests.get(url)
+with open('page-005.webp', 'wb') as f:
+    f.write(resp.content)
+```
+
 | Param | Values |
 |-------|--------|
 | `version` | `madina-1421`, `madina-green`, `mushaf-1024`, `mushaf-madina-1420`, `tajweed-colored`, `Madina-2-Brown-Border` |
@@ -293,6 +301,14 @@ GET /line/{page}/{line}
 
 ```js
 const url = `https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/line-by-line/1/6.png`
+```
+
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/line-by-line/1/6.png'
+resp = requests.get(url)
+with open('page-1-line-6.png', 'wb') as f:
+    f.write(resp.content)
 ```
 
 | Param | Values |
@@ -314,6 +330,16 @@ console.log(page.surah_en, page.ayah_start, page.ayah_end)
 // → "Al-Fatiha"  1  7
 ```
 
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/mushaf-pages/madina-1421/coordinates/coordinates.json'
+resp = requests.get(url)
+data = resp.json()
+page = data['pages']['001']
+print(page['surah_en'], page['ayah_start'], page['ayah_end'])
+# → "Al-Fatiha"  1  7
+```
+
 #### Coordinates — line-level
 
 ```
@@ -326,6 +352,16 @@ const { pages } = await res.json()
 const line = pages['001'].lines['3']
 console.log(line.surah_en, line.ayah_start, line.ayah_end)
 // → "Al-Fatiha"  2  2
+```
+
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/line-by-line/coordinates/coordinates.json'
+resp = requests.get(url)
+data = resp.json()
+line = data['pages']['001']['lines']['3']
+print(line['surah_en'], line['ayah_start'], line['ayah_end'])
+# → "Al-Fatiha"  2  2
 ```
 
 #### Font file
@@ -341,6 +377,14 @@ GET /font/{page}
 }
 ```
 
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/mushaf-fonts/qbc-v2/p1.woff2'
+resp = requests.get(url)
+with open('p1.woff2', 'wb') as f:
+    f.write(resp.content)
+```
+
 #### Tafsir database (SQLite)
 
 ```
@@ -349,6 +393,20 @@ GET /tafsir/{name}
 
 ```js
 const url = `https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/tafsir/tafsir-saadi.db`
+```
+
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/tafsir/tafsir-saadi.db'
+resp = requests.get(url)
+with open('tafsir-saadi.db', 'wb') as f:
+    f.write(resp.content)
+
+# Query with sqlite3
+import sqlite3
+conn = sqlite3.connect('tafsir-saadi.db')
+cur = conn.execute('SELECT Tafsir FROM AS WHERE SURA_num = 1 AND AYA_num = 1')
+print(cur.fetchone()[0])
 ```
 
 | Param | Values |
@@ -368,6 +426,15 @@ const { data } = await res.json()
 // Find tafsir for Al-Fatiha (surah 1), ayah 1
 const ayah = data.find(a => a.surah === 1 && a.ayah === 1)
 console.log(ayah.text)
+```
+
+```py
+import requests
+url = 'https://raw.githubusercontent.com/SolimanAnas/quran-data-library/main/tafsir/json/saadi.json'
+resp = requests.get(url)
+data = resp.json()['data']
+ayah = next(a for a in data if a['surah'] == 1 and a['ayah'] == 1)
+print(ayah['text'])
 ```
 
 | Param | Values |
@@ -400,6 +467,22 @@ tafsirUrl('saadi')                   // → full URL to SQLite DB
 tafsirJsonUrl('ibn-kathir')          // → full URL to JSON export
 await fetchCoords('madina-1421')     // → parsed JSON directly
 await fetchTafsir('saadi')           // → parsed tafsir JSON
+```
+
+### Python Helper Library
+
+A Python module is included for easy URL construction and data fetching:
+
+```py
+from quran_api import page_url, line_url, coords_url, font_url, tafsir_url, tafsir_json_url, fetch_coords, VERSIONS
+
+page_url('tajweed-colored', 5)       # → full URL to page 5
+line_url(1, 6)                        # → full URL to line 6 of page 1
+coords_url('madina-1421')             # → full URL to coordinates JSON
+font_url(1)                           # → full URL to p1.woff2
+tafsir_url('saadi')                   # → full URL to SQLite DB
+tafsir_json_url('ibn-kathir')         # → full URL to JSON export
+fetch_coords('madina-1421')           # → parsed dict directly
 ```
 
 ---
