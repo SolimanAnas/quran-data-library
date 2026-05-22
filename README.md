@@ -1,5 +1,7 @@
 # القرآن الكريم — Quran Data Library
 
+![Line 6](line-by-line/1/6.png) ![Line 7](line-by-line/1/7.png)
+
 A comprehensive, developer-ready collection of Quran data in multiple formats: mushaf page images, scalable font renderings, and line-by-line verse images. Built for Islamic app developers, researchers, and educators.
 
 ---
