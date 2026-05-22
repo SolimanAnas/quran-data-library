@@ -36,6 +36,8 @@ mushaf pages/madina-1421/
 
 Same Madina Mushaf layout with a green-tinted background. Ideal for apps that need a softer or color-coded page background.
 
+![Page 1](mushaf%20pages/madina-green/001.webp)
+
 ```
 mushaf pages/madina-green/
 ├── 001.webp .. 621.webp
@@ -59,6 +61,8 @@ mushaf pages/mushaf-1024/
 
 Modern Madina Mushaf edition based on the 1420 AH printing. Features contemporary calligraphic styling.
 
+![Page 1](mushaf%20pages/mushaf-madina-1420/001.webp)
+
 ```
 mushaf pages/mushaf-madina-1420/
 ├── 001.webp .. 604.webp
@@ -68,6 +72,8 @@ mushaf pages/mushaf-madina-1420/
 ## 5. Tajweed Colored
 
 Color-coded Quran pages following Tajweed rules — each letter is colored according to its pronunciation rule (e.g., red for emphasis, green for nasalization). Perfect for learning proper recitation.
+
+![Page 1](mushaf%20pages/tajweed-colored/001.webp)
 
 ```
 mushaf pages/tajweed-colored/
