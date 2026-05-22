@@ -22,7 +22,9 @@ A comprehensive collection of Quran data in multiple formats: **mushaf page imag
 
 ## 1. Madina 1421
 
-Classic Madina Mushaf printed in 1421 AH (2000 CE). The most widely recognized Quran script style used in the Mushaf al-Madinah.
+Mushaf with Lafz Al-Jalalah in Red (مصحف لفظ الجلالة باللون الأحمر)
+
+![Page 1](mushaf%20pages/madina-1421/001.webp)
 
 ```
 mushaf pages/madina-1421/
