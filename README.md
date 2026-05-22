@@ -162,9 +162,9 @@ line-by-line/
     └── coordinates.json
 ```
 
-**Preview — page 1, lines 1 & 2:**
+**Preview — page 1, lines 6 & 7 (Āyah 1 & 2):**
 
-![Line 1](line-by-line/1/1.png) ![Line 2](line-by-line/1/2.png)
+![Line 6](line-by-line/1/6.png) ![Line 7](line-by-line/1/7.png)
 
 ---
 
