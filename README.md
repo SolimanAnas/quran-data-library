@@ -7,7 +7,7 @@ A comprehensive collection of Quran data: **mushaf page images** in multiple sty
 ![Mushaf Madina 1441](mushaf%20pages/mushaf-madina-1441/001.webp)
 ![Tajweed](mushaf%20pages/tajweed/001.webp)
 
-> **Last updated:** May 23, 2026
+> **Last updated:** May 25, 2026
 
 ---
 
@@ -61,13 +61,44 @@ git clone https://github.com/SolimanAnas/quran-data-library.git
 ### Loading in apps
 
 ```js
-// Example: load page 1 from Madina 1421
+// Load page 1 from Madina 1421
 const img = new Image()
 img.src = 'mushaf pages/madina-1421/001.webp'
 
-// Example: load line 5 of page 10
+// Load line 5 of page 10
 const line = new Image()
 line.src = 'Quran line by line png/10/5.png'
+```
+
+### Using coordinates (JSON)
+
+Each version includes a `coordinates/coordinates.json` file mapping every page to its surah/ayah range:
+
+```js
+// Fetch coordinates for Madina 1421
+const res = await fetch('mushaf pages/madina-1421/coordinates/coordinates.json')
+const coords = await res.json()
+
+// Get surah/ayah for page 1
+const page = coords.pages['001']
+console.log(page.surah_en, page.ayah_start, page.ayah_end)
+// → "Al-Fatiha", 1, 7
+
+// Load the corresponding page image
+const img = new Image()
+img.src = `mushaf pages/madina-1421/${pageKey}.webp`
+```
+
+For line-by-line, coordinates include per-line surah/ayah data:
+
+```js
+const res = await fetch('Quran line by line png/coordinates/coordinates.json')
+const coords = await res.json()
+
+// Line 3 on page 1
+const line = coords.pages['001'].lines['3']
+console.log(line.surah_en, line.ayah_start, line.ayah_end)
+// → "Al-Fatiha", 2, 2
 ```
 
 ---
@@ -77,14 +108,19 @@ line.src = 'Quran line by line png/10/5.png'
 ```
 quran-data-library/
 ├── mushaf pages/
-│   ├── madina-1421/       # Classic Madina Mushaf
-│   ├── madina-green/      # Green-tinted version
-│   ├── mushaf-madina-1441/ # Modern Madina Mushaf
-│   └── tajweed/           # Tajweed color-coded
-├── Quran line by line png/ # Per-page line images
+│   ├── madina-1421/          # Classic Madina Mushaf
+│   │   └── coordinates/      #   └── Page → surah/ayah mapping
+│   ├── madina-green/         # Green-tinted version
+│   │   └── coordinates/      #   └── Page → surah/ayah mapping
+│   ├── mushaf-madina-1441/   # Modern Madina Mushaf
+│   │   └── coordinates/      #   └── Page → surah/ayah mapping
+│   └── tajweed/              # Tajweed color-coded
+│       └── coordinates/      #   └── Page → surah/ayah mapping
+├── Quran line by line png/   # Per-page line images
 │   ├── 1/...15.png
 │   ├── 2/...15.png
-│   └── ...
+│   ├── ...
+│   └── coordinates/          #   └── Page+Line → surah/ayah mapping
 └── README.md
 ```
 
