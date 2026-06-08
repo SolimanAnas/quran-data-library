@@ -511,6 +511,29 @@ line.src = 'line-by-line/10/3.png'
 
 ---
 
+## Islamic API Integration
+
+This data library is integrated with the [Islamic API](https://islamic-api.fly.dev) REST API, which provides:
+
+- **Mushaf pages**: `GET /v1/mushaf/{version}/page/{number}`
+- **Line images**: `GET /v1/mushaf/page/{number}/line/{line}`
+- **Fonts**: `GET /v1/mushaf/font/{number}`
+- **Coordinates**: `GET /v1/mushaf/page/{number}/lines`
+- **Ayah location**: `GET /v1/mushaf/ayah-location/{surah}/{ayah}`
+
+The API returns GitHub CDN URLs from this library — no data duplication.
+
+**Example:**
+```bash
+# Find which page and line Ayat al-Kursi is on
+curl https://islamic-api.fly.dev/v1/mushaf/ayah-location/2/255
+
+# Get the Tajweed image for that page
+curl https://islamic-api.fly.dev/v1/mushaf/tajweed-colored/page/38
+```
+
+---
+
 ## License
 
 Data is provided for personal and educational use. Respect the terms of the original Quran text sources.
