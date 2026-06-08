@@ -1,8 +1,71 @@
-# القرآن الكريم — Quran Data Library
+# Quran Data Library — Mushaf Pages, Fonts, Line Images & Tafsir
 
 ![Line 6](line-by-line/1/6.png) ![Line 7](line-by-line/1/7.png)
 
-A comprehensive, developer-ready collection of Quran data in multiple formats: mushaf page images, scalable font renderings, and line-by-line verse images. Built for Islamic app developers, researchers, and educators.
+> **A comprehensive, developer-ready collection of Quran data** in multiple formats: mushaf page images (6 styles), scalable WOFF2 fonts, line-by-line verse images, and classical Arabic tafsir databases. Built for Islamic app developers, researchers, and educators.
+
+**Keywords:** Quran images, mushaf pages, Madina mushaf, Tajweed colored, Quran fonts, WOFF2, line-by-line Quran, tafsir Ibn Kathir, tafsir Qurtubi, Quran API, Islamic data, Quran web fonts, Arabic calligraphy, Quran data library
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-059669.svg)](LICENSE)
+[![Quran Pages](https://img.shields.io/badge/Pages-604-blue.svg)](mushaf-pages/)
+[![Mushaf Styles](https://img.shields.io/badge/Styles-6-8b5cf6.svg)](#mushaf-page-images)
+[![Tafsir Books](https://img.shields.io/badge/Tafsir-4-ec4899.svg)](#tafsir)
+[![Fonts](https://img.shields.io/badge/Fonts-604-d4a843.svg)](#qbc-v2-fonts)
+
+---
+
+## What is this?
+
+The **Quran Data Library** provides high-quality Quran resources for building Islamic applications:
+
+- **Mushaf page images** — 6 visual styles (Madina, Tajweed, Brown Border, etc.)
+- **Line-by-line images** — Individual verse-line PNGs for each page
+- **QBC v2 fonts** — Scalable WOFF2 web fonts (one per page)
+- **Tafsir databases** — Classical Arabic commentary by Ibn Kathir, Qurtubi, Baghawi, and Sa'di
+- **Coordinates** — Page/line to surah/ayah mappings
+
+All assets are hosted on GitHub's raw CDN — **no server required**.
+
+---
+
+## Quick Start
+
+```bash
+# Clone the repo
+git clone https://github.com/SolimanAnas/quran-data-library.git
+
+# Or use the JavaScript/Python SDKs directly
+```
+
+### JavaScript
+
+```js
+import { pageUrl, fontUrl, fetchCoords } from './quran-api.js'
+
+// Get Tajweed image for page 1
+const img = pageUrl('tajweed-colored', 1)
+
+// Get scalable font for page 1
+const font = fontUrl(1)
+
+// Fetch coordinates
+const coords = await fetchCoords('madina-1421')
+```
+
+### Python
+
+```python
+from quran_api import page_url, font_url, fetch_coords
+
+# Get Madina image for page 1
+img = page_url('madina-1421', 1)
+
+# Get font URL
+font = font_url(1)
+
+# Fetch coordinates
+coords = fetch_coords('madina-1421')
+```
 
 ---
 
